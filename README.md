@@ -30,7 +30,7 @@ If you want to call Java code from Camunda in a service task, there are two comm
 1. Configure the service task to be a Java Delegate and provide the fully qualified classname to a Java Delegate implementation
 2. Configure the service task to be a Delegate Expression and provide a UEL-Expression which points to a Java Delegate implementation
 
-Both cases work with Java Delegates, which are Java classes which implement the `org.camunda.bpm.engine.delegate.JavaDelegate` interface. This interface only has one method:
+Both cases work with Java Delegates, which are Java classes implementing the `org.camunda.bpm.engine.delegate.JavaDelegate` interface. This interface only has one method:
 
 ``` java
 public interface JavaDelegate {
@@ -40,7 +40,7 @@ public interface JavaDelegate {
 }
 ```
 
-When the Process Engine handles this task, the method gets called and the process instance state is passed as a parameter of the type `DelegateExecution`. Developers can then extract variables from the execution or pass new ones into it (it is stateful!). As described above, geneating Java classes from Clojure in a way that the classloader can find them comes with a lot of overhead. We decided to make use of the Delegate Expressio mechanism to call Clojure Functions directly from Camunda. To achieve this, a service task needs to be configured as a 'Delegate Expression', and the EL function `clj:delegate` needs to point to a Clojure function which accepts a single parameter:
+When the Process Engine handles this task, the method gets called and the process instance state is passed as a parameter of the type `DelegateExecution`. Developers can then extract variables from the execution or pass new ones into it (it is stateful!). As described above, geneating Java classes from Clojure in a way that the classloader can find them comes with a lot of overhead. We decided to make use of the Delegate Expression mechanism to call Clojure Functions directly from Camunda. To achieve this, a service task needs to be configured as a 'Delegate Expression', and the EL function `clj:delegate` needs to point to a Clojure function which accepts a single parameter:
 
 ![Camunda Service Task with a Delegate Expression](docs/approval.png "Delegate Expression")
 
@@ -75,7 +75,7 @@ The library is available on Clojars: `[com.lambdaschmiede/camunda-clojure-plugin
 
 
 ## How stable is this? 
-Currently this implementation is only used by lambdaschmiede itself, although are presenting it to customers using Camunda. It works in our projects, and we will keep maintaining it to guarantee a stable library for our own use. Stability and non-breaking changes is one of our main goals for this library.
+Currently this implementation is only used by lambdaschmiede itself, although we are presenting it to customers using Camunda. It works in our projects, and we will keep maintaining it to guarantee a stable library for our own use. Stability and non-breaking changes are one of our main goals for this library.
 
 ## What's up next?
 We'd like to also provide a similar way to create Execution Listeners and Task Listeners in the future or add some helper functions, if we have code in our own software that gets repeated a lot.
